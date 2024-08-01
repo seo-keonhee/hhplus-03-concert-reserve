@@ -34,10 +34,10 @@ public class TokenService {
             throw new ConcertException(ErrorCode.TOKEN_IS_NOT_FOUND, ErrorCode.TOKEN_IS_NOT_FOUND.getMsg());
         }
         Tokens tokens = tokenRepository.getTokens(userId);
-        // 대기가 끝나지 않았을 경우
-        if (tokens.getActiveDate() == null){
-            throw new ConcertException(ErrorCode.INVALID_TOKEN, ErrorCode.INVALID_TOKEN.getMsg());
-        }
+//        // 대기가 끝나지 않았을 경우
+//        if (tokens.getActiveDate() == null){
+//            throw new ConcertException(ErrorCode.INVALID_TOKEN, ErrorCode.INVALID_TOKEN.getMsg());
+//        }
         // 토큰이 만료된 경우
         if(tokens.getDeactivateDate().isBefore(LocalDateTime.now())){
             throw new ConcertException(ErrorCode.TOKEN_EXPIRED, ErrorCode.TOKEN_EXPIRED.getMsg());
