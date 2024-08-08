@@ -20,22 +20,23 @@ public interface TokenJpaRepository extends JpaRepository<TokenEntity, Long> {
 
     TokenEntity findByUserId(String userId);
 
-    @Query(value = """
-        select t
-        from TokenEntity t
-        where t.activeDate is not null
-        and t.deactiveDate > :now
-        order by t.id desc
-        limit 1
-    """)
-    TokenEntity findLastActiveToken(LocalDateTime now);
-
-    @Query(value = """
-        select t
-        from TokenEntity t
-        where t.activeDate is null
-        order by t.id asc
-        limit :counts
-    """)
-    List<TokenEntity> findWaitingTokens(int counts);
+    void deleteByUserId(String userId);
+//    @Query(value = """
+//        select t
+//        from TokenEntity t
+//        where t.activeDate is not null
+//        and t.deactiveDate > :now
+//        order by t.id desc
+//        limit 1
+//    """)
+//    TokenEntity findLastActiveToken(LocalDateTime now);
+//
+//    @Query(value = """
+//        select t
+//        from TokenEntity t
+//        where t.activeDate is null
+//        order by t.id asc
+//        limit :counts
+//    """)
+//    List<TokenEntity> findWaitingTokens(int counts);
 }

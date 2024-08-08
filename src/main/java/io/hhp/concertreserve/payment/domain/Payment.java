@@ -1,12 +1,14 @@
 package io.hhp.concertreserve.payment.domain;
 
-import io.hhp.concertreserve.payment.infra.entity.PaymentEntity;
+import io.hhp.concertreserve.payment.domain.event.PaymentSavedEvent;
+import io.hhp.concertreserve.payment.domain.event.TokenDeletedEvent;
 import io.hhp.concertreserve.support.exception.ConcertException;
 import io.hhp.concertreserve.support.exception.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class Payment {
+
     private String reservationId;
     private String userId;
     private Long balance;
@@ -43,6 +46,7 @@ public class Payment {
             , String userId
             , Long totalFee
             , PaymentRepository paymentRepository
+            , ApplicationEventPublisher eventPublisher
     ) {
         // 좌석이 예약 가능한지 확인
         if (reservationExpiredDate.isBefore(LocalDateTime.now()))  throw new ConcertException(ErrorCode.RESERVATION_EXPIRED, ErrorCode.RESERVATION_EXPIRED.getMsg());
@@ -61,7 +65,9 @@ public class Payment {
                 , LocalDateTime.now()
         );
         // 결제 이력 저장
-        paymentRepository.savePayment(payment);
+        eventPublisher.publishEvent(new PaymentSavedEvent(this, payment));
+        // 토큰 삭제
+        eventPublisher.publishEvent(new TokenDeletedEvent(this, userId));
         return payment;
     }
 }

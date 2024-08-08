@@ -8,11 +8,7 @@ public interface TokenRepository {
 
     Tokens getTokens(String userId);
 
-    Tokens lastActiveTokens();
-
-    List<Tokens> getWaitingTokens(int counts);
-
-    void saveTokens(Tokens tokens);
-
     void saveAllTokens(List<Tokens> tokens);
+
+    void deletebyUserId(String userId);
 }
