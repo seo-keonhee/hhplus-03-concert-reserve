@@ -4,7 +4,6 @@ import io.hhp.concertreserve.payment.domain.Balance;
 import io.hhp.concertreserve.payment.domain.Payment;
 import io.hhp.concertreserve.payment.domain.PaymentRepository;
 import io.hhp.concertreserve.payment.infra.entity.BalanceEntity;
-import io.hhp.concertreserve.payment.infra.repository.BalanceHistoryJpaRepository;
 import io.hhp.concertreserve.payment.infra.repository.BalanceJpaRepository;
 import io.hhp.concertreserve.payment.infra.repository.PaymentJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,6 @@ public class PaymentRepositoryImpl implements PaymentRepository {
 
     private final PaymentJpaRepository paymentJpaRepository;
     private final BalanceJpaRepository balanceJpaRepository;
-    private final BalanceHistoryJpaRepository balanceHistoryJpaRepository;
     private final PaymentMapper paymentMapper;
 
     @Override
@@ -53,7 +51,6 @@ public class PaymentRepositoryImpl implements PaymentRepository {
         BalanceEntity balanceEntity = balanceJpaRepository.findByUserId(userId);
         balanceEntity.setBalance(balanceEntity.getBalance() + fee);
         balanceJpaRepository.save(balanceEntity);
-        balanceHistoryJpaRepository.save(paymentMapper.toEntity(userId, fee, true));
     }
 
     /**
@@ -80,7 +77,6 @@ public class PaymentRepositoryImpl implements PaymentRepository {
         BalanceEntity balanceEntity = balanceJpaRepository.findByUserId(userId);
         balanceEntity.setBalance(balanceEntity.getBalance() - fee);
         balanceJpaRepository.save(balanceEntity);
-        balanceHistoryJpaRepository.save(paymentMapper.toEntity(userId, fee, false));
     }
 
     @Override

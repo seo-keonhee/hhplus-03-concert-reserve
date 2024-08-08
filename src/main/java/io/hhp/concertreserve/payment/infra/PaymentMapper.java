@@ -3,7 +3,6 @@ package io.hhp.concertreserve.payment.infra;
 import io.hhp.concertreserve.payment.domain.Balance;
 import io.hhp.concertreserve.payment.domain.Payment;
 import io.hhp.concertreserve.payment.infra.entity.BalanceEntity;
-import io.hhp.concertreserve.payment.infra.entity.BalanceHistoryEntity;
 import io.hhp.concertreserve.payment.infra.entity.PaymentEntity;
 import org.springframework.stereotype.Component;
 
@@ -44,15 +43,5 @@ public record PaymentMapper() {
         balanceEntity.setBalance(balance.getBalance());
 
         return balanceEntity;
-    }
-
-    public BalanceHistoryEntity toEntity(String userId, Long fee, boolean chargeYn) {
-        BalanceHistoryEntity balanceHistoryEntity = new BalanceHistoryEntity();
-        balanceHistoryEntity.setUserId(userId);
-        balanceHistoryEntity.setFee(fee);
-        balanceHistoryEntity.setChargeYn(chargeYn ? 1 : 0);
-        balanceHistoryEntity.setUpdateDate(LocalDateTime.now());
-
-        return balanceHistoryEntity;
     }
 }

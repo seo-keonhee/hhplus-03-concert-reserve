@@ -43,4 +43,8 @@ public class ReservationEntity {
     @Column(name = "reservation_date", nullable = false)
     private LocalDateTime reservationDate;
 
+    @ColumnDefault("'N'")
+    @Column(name = "confirm_reservation", nullable = false, length = 1)
+    private String confirmReservation;
+
 }

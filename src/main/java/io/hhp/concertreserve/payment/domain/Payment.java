@@ -60,8 +60,8 @@ public class Payment {
                 , totalFee
                 , LocalDateTime.now()
         );
+        // 결제 이력 저장
         paymentRepository.savePayment(payment);
         return payment;
     }
-
 }

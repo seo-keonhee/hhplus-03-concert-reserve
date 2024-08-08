@@ -14,6 +14,7 @@ import io.hhp.concertreserve.concert.infra.repository.SeatJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -45,9 +46,10 @@ public class ConcertRepositoryImpl implements ConcertRepository {
     public List<Seat> getSeats(String scheduleId) {
         ConcertScheduleEntity concertScheduleEntity =
                 concertScheduleJpaRepository.findByScheduleId(scheduleId);
-        List<SeatEntity> seats = seatJpaRepository.findBySeatIdNotIn(
-                reservationJpaRepository.findByScheduleId(scheduleId));
-        return seats.stream().map(seatEntity -> concertMapper.toDomain(seatEntity, concertScheduleEntity)).toList();
+        List<String> reservedSeat =
+                reservationJpaRepository.findSeatByScheduleIdAndReserveOk(scheduleId, LocalDateTime.now().minusMinutes(30));
+        return seatJpaRepository.findBySeatIdNotIn(reservedSeat).stream()
+                .map(seatEntity -> concertMapper.toDomain(seatEntity, concertScheduleEntity)).toList();
     }
 
     @Override
