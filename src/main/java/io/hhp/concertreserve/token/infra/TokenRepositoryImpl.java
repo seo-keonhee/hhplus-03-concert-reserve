@@ -32,36 +32,19 @@ public class TokenRepositoryImpl implements TokenRepository {
         return tokenMapper.toDomain(tokenJpaRepository.findByUserId(userId));
     }
 
-
-    /**
-     * 마지막으로 활성화된 토큰을 조회
-     */
-    @Override
-    public Tokens lastActiveTokens() {
-        return tokenMapper.toDomain(tokenJpaRepository.findLastActiveToken(LocalDateTime.now()));
-    }
-
-    /**
-     * 비활성화상태의 토큰목록을 조회
-     */
-    @Override
-    public List<Tokens> getWaitingTokens(int counts) {
-        return tokenJpaRepository.findWaitingTokens(counts).stream().map(tokenMapper::toDomain).toList();
-    }
-
-    /**
-     * 토큰을 저장
-     */
-    @Override
-    public void saveTokens(Tokens tokens) {
-        tokenJpaRepository.save(tokenMapper.toEntity(tokens));
-    }
-
     /**
      * 토큰을 저장
      */
     @Override
     public void saveAllTokens(List<Tokens> tokens) {
         tokenJpaRepository.saveAll(tokens.stream().map(tokenMapper::toEntity).toList());
+    }
+
+    /**
+     * 토큰을 삭제
+     */
+    @Override
+    public void deletebyUserId(String userId) {
+        tokenJpaRepository.deleteByUserId(userId);
     }
 }
