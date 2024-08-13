@@ -1,8 +1,8 @@
 package io.hhp.concertreserve.token.domain;
 
 import io.hhp.concertreserve.payment.domain.event.TokenDeletedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 public class TokenDeletedEventListener {
@@ -12,7 +12,7 @@ public class TokenDeletedEventListener {
         this.tokenRepository = tokenRepository;
     }
 
-    @EventListener
+    @TransactionalEventListener
     public void handleTokenDeletedEvent(TokenDeletedEvent event) {
         tokenRepository.deletebyUserId(event.getUserId());
     }

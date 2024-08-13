@@ -64,6 +64,7 @@ public class Payment {
                 , totalFee
                 , LocalDateTime.now()
         );
+        // todo 비동기로 만들기
         // 결제 이력 저장
         eventPublisher.publishEvent(new PaymentSavedEvent(this, payment));
         // 토큰 삭제
