@@ -1,4 +1,4 @@
-package io.hhp.concertreserve.concert.infra.entity;
+package io.hhp.concertreserve.reservation.infra.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

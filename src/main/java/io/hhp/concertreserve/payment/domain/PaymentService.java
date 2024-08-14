@@ -56,8 +56,7 @@ public class PaymentService {
     public Payment pay(String reservatoinId, LocalDateTime reservationDate, String userId, Long totalFee) {
         lock.lock();
         try {
-            Payment payment = new Payment();
-            return payment.pay(reservatoinId
+            return new Payment().pay(reservatoinId
                     , reservationDate.plusHours(expiredTime)
                     , userId
                     , totalFee

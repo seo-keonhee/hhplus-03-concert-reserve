@@ -1,7 +1,5 @@
 package io.hhp.concertreserve.payment.domain;
 
-import io.hhp.concertreserve.payment.domain.event.PaymentSavedEvent;
-import io.hhp.concertreserve.payment.domain.event.TokenDeletedEvent;
 import io.hhp.concertreserve.support.exception.ConcertException;
 import io.hhp.concertreserve.support.exception.ErrorCode;
 import jakarta.transaction.Transactional;
@@ -57,18 +55,10 @@ public class Payment {
         if (balance < totalFee) throw new ConcertException(ErrorCode.NOT_ENOUGH_BALANCE, ErrorCode.NOT_ENOUGH_BALANCE.getMsg());
         // 결제 진행
         paymentRepository.pay(userId, totalFee);
-        Payment payment = new Payment(
-                reservationId
-                , userId
-                , balance
-                , totalFee
-                , LocalDateTime.now()
-        );
-        // todo 비동기로 만들기
-        // 결제 이력 저장
-        eventPublisher.publishEvent(new PaymentSavedEvent(this, payment));
-        // 토큰 삭제
-        eventPublisher.publishEvent(new TokenDeletedEvent(this, userId));
+
+        // 이벤트 발생
+        Payment payment = new Payment(reservationId, userId, balance, totalFee, LocalDateTime.now());
+        eventPublisher.publishEvent(new PaymentEvent(this, payment));
         return payment;
     }
 }

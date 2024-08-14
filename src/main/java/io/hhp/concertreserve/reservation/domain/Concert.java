@@ -1,4 +1,4 @@
-package io.hhp.concertreserve.concert.domain;
+package io.hhp.concertreserve.reservation.domain;
 
 import lombok.Getter;
 import lombok.Setter;

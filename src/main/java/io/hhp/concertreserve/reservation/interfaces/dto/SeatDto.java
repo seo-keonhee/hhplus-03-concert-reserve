@@ -1,6 +1,6 @@
-package io.hhp.concertreserve.concert.interfaces.dto;
+package io.hhp.concertreserve.reservation.interfaces.dto;
 
-import io.hhp.concertreserve.concert.domain.Seat;
+import io.hhp.concertreserve.reservation.domain.Seat;
 
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-package io.hhp.concertreserve.concert.domain;
+package io.hhp.concertreserve.reservation.domain;
 
 import jakarta.transaction.Transactional;
 import lombok.Getter;
@@ -68,19 +68,19 @@ public class Reservation {
             String scheduleId
             , String seatId
             , String userId
-            , ConcertRepository concertRepository
+            , ReservationRepository reservationRepository
     ) {
         Reservation reservation = new Reservation(
                 null
                 , scheduleId
                 , seatId
                 , userId
-                , concertRepository.getSelectconcert(scheduleId).getArtistName()
-                , concertRepository.getSelectconcert(scheduleId).getConcertFee() + concertRepository.getSelectSeats(scheduleId, seatId).getSeatFee()
-                , concertRepository.getSelectconcert(scheduleId).getConcertDate()
+                , reservationRepository.getSelectconcert(scheduleId).getArtistName()
+                , reservationRepository.getSelectconcert(scheduleId).getConcertFee() + reservationRepository.getSelectSeats(scheduleId, seatId).getSeatFee()
+                , reservationRepository.getSelectconcert(scheduleId).getConcertDate()
                 , LocalDateTime.now()
         );
-        concertRepository.saveReservation(reservation);
+        reservationRepository.saveReservation(reservation);
         return reservation;
     }
 }

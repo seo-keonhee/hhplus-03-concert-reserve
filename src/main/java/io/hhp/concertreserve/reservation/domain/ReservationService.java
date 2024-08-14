@@ -1,4 +1,4 @@
-package io.hhp.concertreserve.concert.domain;
+package io.hhp.concertreserve.reservation.domain;
 
 
 import lombok.RequiredArgsConstructor;
@@ -12,9 +12,9 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ConcertService {
+public class ReservationService {
 
-    private final ConcertRepository concertRepository;
+    private final ReservationRepository reservationRepository;
 
     @Autowired
     private RedissonClient redissonClient;
@@ -24,7 +24,7 @@ public class ConcertService {
      */
     @Cacheable("concerts")
     public List<Concert> getAllconcerts() {
-        return concertRepository.getAllConcerts();
+        return reservationRepository.getAllConcerts();
     }
 
     /**
@@ -32,14 +32,14 @@ public class ConcertService {
      */
     @Cacheable(value = "schedules", key = "#concertId")
     public List<Concert> getSchedules(String concertId) {
-        return concertRepository.getSchedules(concertId);
+        return reservationRepository.getSchedules(concertId);
     }
 
     /**
      * 예약가능 좌석목록 조회
      */
     public List<Seat> getSeats(String scheduleId) {
-        return concertRepository.getSeats(scheduleId);
+        return reservationRepository.getSeats(scheduleId);
     }
 
     /**
@@ -50,7 +50,7 @@ public class ConcertService {
         try{
             lock.lock();
             Reservation reservation = new Reservation();
-            return reservation.reserve(scheduleId, seatId, userId, concertRepository);
+            return reservation.reserve(scheduleId, seatId, userId, reservationRepository);
         }
         catch (Exception e) {
             throw e;
@@ -64,6 +64,6 @@ public class ConcertService {
      * 내 예약 목록 조회
      */
     public List<Reservation> getReservations(String userId) {
-        return concertRepository.getReservations(userId);
+        return reservationRepository.getReservations(userId);
     }
 }

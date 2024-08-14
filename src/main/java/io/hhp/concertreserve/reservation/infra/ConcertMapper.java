@@ -1,12 +1,12 @@
-package io.hhp.concertreserve.concert.infra;
+package io.hhp.concertreserve.reservation.infra;
 
-import io.hhp.concertreserve.concert.domain.Concert;
-import io.hhp.concertreserve.concert.domain.Reservation;
-import io.hhp.concertreserve.concert.domain.Seat;
-import io.hhp.concertreserve.concert.infra.entity.ConcertEntity;
-import io.hhp.concertreserve.concert.infra.entity.ConcertScheduleEntity;
-import io.hhp.concertreserve.concert.infra.entity.ReservationEntity;
-import io.hhp.concertreserve.concert.infra.entity.SeatEntity;
+import io.hhp.concertreserve.reservation.domain.Concert;
+import io.hhp.concertreserve.reservation.domain.Reservation;
+import io.hhp.concertreserve.reservation.domain.Seat;
+import io.hhp.concertreserve.reservation.infra.entity.ConcertEntity;
+import io.hhp.concertreserve.reservation.infra.entity.ConcertScheduleEntity;
+import io.hhp.concertreserve.reservation.infra.entity.ReservationEntity;
+import io.hhp.concertreserve.reservation.infra.entity.SeatEntity;
 import org.springframework.stereotype.Component;
 
 @Component

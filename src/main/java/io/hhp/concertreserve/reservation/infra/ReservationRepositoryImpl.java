@@ -1,16 +1,15 @@
-package io.hhp.concertreserve.concert.infra;
+package io.hhp.concertreserve.reservation.infra;
 
-import io.hhp.concertreserve.concert.domain.Concert;
-import io.hhp.concertreserve.concert.domain.ConcertRepository;
-import io.hhp.concertreserve.concert.domain.Reservation;
-import io.hhp.concertreserve.concert.domain.Seat;
-import io.hhp.concertreserve.concert.infra.entity.ConcertEntity;
-import io.hhp.concertreserve.concert.infra.entity.ConcertScheduleEntity;
-import io.hhp.concertreserve.concert.infra.entity.SeatEntity;
-import io.hhp.concertreserve.concert.infra.repository.ConcertJpaRepository;
-import io.hhp.concertreserve.concert.infra.repository.ConcertScheduleJpaRepository;
-import io.hhp.concertreserve.concert.infra.repository.ReservationJpaRepository;
-import io.hhp.concertreserve.concert.infra.repository.SeatJpaRepository;
+import io.hhp.concertreserve.reservation.domain.Concert;
+import io.hhp.concertreserve.reservation.domain.ReservationRepository;
+import io.hhp.concertreserve.reservation.domain.Reservation;
+import io.hhp.concertreserve.reservation.domain.Seat;
+import io.hhp.concertreserve.reservation.infra.entity.ConcertEntity;
+import io.hhp.concertreserve.reservation.infra.entity.ConcertScheduleEntity;
+import io.hhp.concertreserve.reservation.infra.repository.ConcertJpaRepository;
+import io.hhp.concertreserve.reservation.infra.repository.ConcertScheduleJpaRepository;
+import io.hhp.concertreserve.reservation.infra.repository.ReservationJpaRepository;
+import io.hhp.concertreserve.reservation.infra.repository.SeatJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +18,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class ConcertRepositoryImpl implements ConcertRepository {
+public class ReservationRepositoryImpl implements ReservationRepository {
 
     private final ConcertJpaRepository concertJpaRepository;
     private final ConcertScheduleJpaRepository concertScheduleJpaRepository;

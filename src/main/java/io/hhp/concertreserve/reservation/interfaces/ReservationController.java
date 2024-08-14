@@ -1,9 +1,9 @@
-package io.hhp.concertreserve.concert.interfaces;
+package io.hhp.concertreserve.reservation.interfaces;
 
-import io.hhp.concertreserve.concert.domain.ConcertService;
-import io.hhp.concertreserve.concert.interfaces.dto.ConcertDto;
-import io.hhp.concertreserve.concert.interfaces.dto.ReservationDto;
-import io.hhp.concertreserve.concert.interfaces.dto.SeatDto;
+import io.hhp.concertreserve.reservation.domain.ReservationService;
+import io.hhp.concertreserve.reservation.interfaces.dto.ConcertDto;
+import io.hhp.concertreserve.reservation.interfaces.dto.ReservationDto;
+import io.hhp.concertreserve.reservation.interfaces.dto.SeatDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/reservations")
 @RequiredArgsConstructor
-public class ConcertController {
+public class ReservationController {
 
-    private final ConcertService concertService;
+    private final ReservationService reservationService;
 
     /**
      * 모든 콘서트 목록을 조회
@@ -24,7 +24,7 @@ public class ConcertController {
     @GetMapping("/all")
     public ResponseEntity<List<ConcertDto>> getAllConcerts() {
         return ResponseEntity.status(HttpStatus.OK).body(
-                concertService.getAllconcerts().stream().map(ConcertDto::toConcertDto).toList());
+                reservationService.getAllconcerts().stream().map(ConcertDto::toConcertDto).toList());
     }
 
     /**
@@ -33,7 +33,7 @@ public class ConcertController {
     @GetMapping("/schedule/{concertId}")
     public ResponseEntity<List<ConcertDto>> getAvailableSchedules(@PathVariable String concertId) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                concertService.getSchedules(concertId).stream().map(ConcertDto::toConcertDto).toList());
+                reservationService.getSchedules(concertId).stream().map(ConcertDto::toConcertDto).toList());
     }
 
     /**
@@ -42,7 +42,7 @@ public class ConcertController {
     @GetMapping("/seat/{scheduleId}")
     public ResponseEntity<List<SeatDto>> getAvailableSeats(@PathVariable String scheduleId) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                concertService.getSeats(scheduleId).stream().map(SeatDto::toSeatDto).toList());
+                reservationService.getSeats(scheduleId).stream().map(SeatDto::toSeatDto).toList());
     }
 
     /**
@@ -52,7 +52,7 @@ public class ConcertController {
     public ResponseEntity<ReservationDto> applyReservation(@RequestParam(name = "scheduleId") String scheduleId
             , @RequestParam(name = "seatId") String seatId, @RequestParam(name = "userId") String userId) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                ReservationDto.toReservationDto(concertService.applyReservation(scheduleId,seatId,userId)));
+                ReservationDto.toReservationDto(reservationService.applyReservation(scheduleId,seatId,userId)));
     }
 
     /**
@@ -61,6 +61,6 @@ public class ConcertController {
     @GetMapping("/{userId}")
     public ResponseEntity<List<ReservationDto>> getReservations(@PathVariable String userId) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                concertService.getReservations(userId).stream().map(ReservationDto::toReservationDto).toList());
+                reservationService.getReservations(userId).stream().map(ReservationDto::toReservationDto).toList());
     }
 }

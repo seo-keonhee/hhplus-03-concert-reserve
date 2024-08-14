@@ -1,6 +1,6 @@
-package io.hhp.concertreserve.concert.infra.repository;
+package io.hhp.concertreserve.reservation.infra.repository;
 
-import io.hhp.concertreserve.concert.infra.entity.SeatEntity;
+import io.hhp.concertreserve.reservation.infra.entity.SeatEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

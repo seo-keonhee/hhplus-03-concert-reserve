@@ -3,4 +3,4 @@
 아래의 경로를 확인 바랍니다 
 >> main.java.io.hhp.concertreserve.token.domain
 
->> main.java.io.hhp.concertreserve.concert.domain
+>> main.java.io.hhp.concertreserve.reservation.domain

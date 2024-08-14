@@ -1,8 +1,8 @@
-package io.hhp.concertreserve.concert.domain;
+package io.hhp.concertreserve.reservation.domain;
 
 import java.util.List;
 
-public interface ConcertRepository {
+public interface ReservationRepository {
 
     List<Concert> getAllConcerts();
 

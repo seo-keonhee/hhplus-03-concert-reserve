@@ -1,4 +1,4 @@
-package io.hhp.concertreserve.concert.infra.entity;
+package io.hhp.concertreserve.reservation.infra.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Getter
