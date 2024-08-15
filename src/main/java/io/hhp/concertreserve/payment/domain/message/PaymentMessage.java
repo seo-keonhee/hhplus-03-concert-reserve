@@ -2,6 +2,7 @@ package io.hhp.concertreserve.payment.domain.message;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.hhp.concertreserve.payment.domain.Payment;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +23,10 @@ public class PaymentMessage {
     public PaymentMessage toMessage(Payment payment) {
         PaymentMessage paymentMessage = new PaymentMessage();
         paymentMessage.setMessageId(payment.getReservationId());
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         try {
-            String messageContents = new ObjectMapper().writeValueAsString(payment);
+            String messageContents = mapper.writeValueAsString(payment);
             paymentMessage.setMessage(messageContents);
         } catch (JsonProcessingException e) {
             log.error("Can't convert payment to message", e);
@@ -33,8 +36,10 @@ public class PaymentMessage {
 
     public Payment toPayment(String message) {
         Payment payment = new Payment();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         try {
-            payment = new ObjectMapper().readValue(message, Payment.class);
+            payment = mapper.readValue(message, Payment.class);
         } catch(IOException e) {
             log.error("Can't convert message to payment", e);
         }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-class PaymentKafkaMessageSender implements PaymentMessageSender {
+public class PaymentKafkaMessageSender implements PaymentMessageSender {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
