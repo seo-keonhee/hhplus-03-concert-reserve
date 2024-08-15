@@ -12,7 +12,7 @@ public interface PaymentOutboxJpaRepository extends JpaRepository<PaymentOutboxE
         set p.status = 1
         where p.id = :messageId
     """)
-    void updateByMessageId(Long messageId);
+    int updateByMessageId(Long messageId);
 
     @Query(value = """
         select p

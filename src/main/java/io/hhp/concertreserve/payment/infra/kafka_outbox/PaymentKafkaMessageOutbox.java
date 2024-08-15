@@ -18,8 +18,8 @@ public class PaymentKafkaMessageOutbox implements PaymentMessageOutbox {
         paymentOutboxJpaRepository.save(new PaymentOutboxEntity().toEntity(message));
     }
     @Override
-    public void updateState(Long messageId) {
-        paymentOutboxJpaRepository.updateByMessageId(messageId);
+    public int updateState(Long messageId) {
+        return paymentOutboxJpaRepository.updateByMessageId(messageId);
     }
 
     @Override

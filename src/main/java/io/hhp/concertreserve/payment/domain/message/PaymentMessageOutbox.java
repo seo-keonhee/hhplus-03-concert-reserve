@@ -5,7 +5,7 @@ import java.util.List;
 public interface PaymentMessageOutbox {
     void write(PaymentMessage message);
 
-    void updateState(Long messageId);
+    int updateState(Long messageId);
 
     List<PaymentMessage> findAllNotPublished();
 }
