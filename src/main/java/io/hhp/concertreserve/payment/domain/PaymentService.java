@@ -78,4 +78,11 @@ public class PaymentService {
     public List<Payment> getPayments(String userId) {
         return paymentRepository.getPayments(userId);
     }
+
+    /**
+     * 사용자가 결제한 내역을 저장한다.
+     */
+    public void savePayment(Payment payment) {
+        paymentRepository.savePayment(payment);
+    }
 }

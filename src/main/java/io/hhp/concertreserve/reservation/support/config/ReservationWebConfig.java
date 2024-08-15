@@ -23,7 +23,7 @@ public class ReservationWebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public FilterRegistrationBean<ReservationLogFilter> loggingFilter() {
+    public FilterRegistrationBean<ReservationLogFilter> reservationLogFilter() {
         FilterRegistrationBean<ReservationLogFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new ReservationLogFilter());
         registrationBean.addUrlPatterns("/reservations/**");

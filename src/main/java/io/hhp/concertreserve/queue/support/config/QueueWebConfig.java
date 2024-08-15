@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class QueueWebConfig implements WebMvcConfigurer {
     @Bean
-    public FilterRegistrationBean<QueueLogFilter> loggingFilter() {
+    public FilterRegistrationBean<QueueLogFilter> queueLogFilter() {
         FilterRegistrationBean<QueueLogFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new QueueLogFilter());
         registrationBean.addUrlPatterns("/token/**");
