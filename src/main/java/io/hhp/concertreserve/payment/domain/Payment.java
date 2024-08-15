@@ -1,7 +1,7 @@
 package io.hhp.concertreserve.payment.domain;
 
-import io.hhp.concertreserve.support.exception.ConcertException;
-import io.hhp.concertreserve.support.exception.ErrorCode;
+import io.hhp.concertreserve.reservation.support.ReservationException;
+import io.hhp.concertreserve.reservation.support.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,18 +47,18 @@ public class Payment {
             , ApplicationEventPublisher eventPublisher
     ) {
         // 좌석이 예약 가능한지 확인
-        if (reservationExpiredDate.isBefore(LocalDateTime.now()))  throw new ConcertException(ErrorCode.RESERVATION_EXPIRED, ErrorCode.RESERVATION_EXPIRED.getMsg());
+        if (reservationExpiredDate.isBefore(LocalDateTime.now()))  throw new ReservationException(ErrorCode.RESERVATION_EXPIRED, ErrorCode.RESERVATION_EXPIRED.getMsg());
         // 결제 이력이 있는지 확인
-        if (paymentRepository.isPayment(reservationId)) throw new ConcertException(ErrorCode.PAYMENT_IS_FOUND, ErrorCode.PAYMENT_IS_FOUND.getMsg());
+        if (paymentRepository.isPayment(reservationId)) throw new ReservationException(ErrorCode.PAYMENT_IS_FOUND, ErrorCode.PAYMENT_IS_FOUND.getMsg());
         // 잔액이 충분한지 확인
         Long balance = paymentRepository.getBalance(userId).getBalance();
-        if (balance < totalFee) throw new ConcertException(ErrorCode.NOT_ENOUGH_BALANCE, ErrorCode.NOT_ENOUGH_BALANCE.getMsg());
+        if (balance < totalFee) throw new ReservationException(ErrorCode.NOT_ENOUGH_BALANCE, ErrorCode.NOT_ENOUGH_BALANCE.getMsg());
         // 결제 진행
         paymentRepository.pay(userId, totalFee);
 
         // 이벤트 발생
         Payment payment = new Payment(reservationId, userId, balance, totalFee, LocalDateTime.now());
-        eventPublisher.publishEvent(new PaymentEvent(this, payment));
+        eventPublisher.publishEvent(new PaymentEvent(payment));
         return payment;
     }
 }

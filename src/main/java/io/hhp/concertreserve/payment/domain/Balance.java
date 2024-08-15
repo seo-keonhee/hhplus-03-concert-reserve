@@ -1,7 +1,7 @@
 package io.hhp.concertreserve.payment.domain;
 
-import io.hhp.concertreserve.support.exception.ConcertException;
-import io.hhp.concertreserve.support.exception.ErrorCode;
+import io.hhp.concertreserve.reservation.support.ReservationException;
+import io.hhp.concertreserve.reservation.support.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +31,7 @@ public class Balance {
 
     @Transactional
     public Balance charge(Balance balance, Long chargeFee, PaymentRepository paymentRepository) {
-        if (chargeFee < 0) throw new ConcertException(ErrorCode.CHARGE_AMOUNT_IS_NEGATIVE, ErrorCode.CHARGE_AMOUNT_IS_NEGATIVE.getMsg());
+        if (chargeFee < 0) throw new ReservationException(ErrorCode.CHARGE_AMOUNT_IS_NEGATIVE, ErrorCode.CHARGE_AMOUNT_IS_NEGATIVE.getMsg());
         paymentRepository.charge(balance.getUserId(), chargeFee);
         return new Balance(balance.getUserId(), balance.getBalance() + chargeFee);
     }

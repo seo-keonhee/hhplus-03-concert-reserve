@@ -24,12 +24,12 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     private final ConcertScheduleJpaRepository concertScheduleJpaRepository;
     private final ReservationJpaRepository reservationJpaRepository;
     private final SeatJpaRepository seatJpaRepository;
-    private final ConcertMapper concertMapper;
+    private final ReservationMapper reservationMapper;
 
     @Override
     public List<Concert> getAllConcerts() {
         List<ConcertEntity> concertEntities = concertJpaRepository.findAll();
-        return concertEntities.stream().map(concertMapper::toDomain).toList();
+        return concertEntities.stream().map(reservationMapper::toDomain).toList();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
         List<ConcertScheduleEntity> concertScheduleEntities =
                 concertScheduleJpaRepository.findByConcertId(concertId);
         return concertScheduleEntities.stream()
-                .map(ConcertScheduleEntity -> concertMapper.toDomain(concertEntity, ConcertScheduleEntity)).toList();
+                .map(ConcertScheduleEntity -> reservationMapper.toDomain(concertEntity, ConcertScheduleEntity)).toList();
     }
 
     @Override
@@ -48,13 +48,13 @@ public class ReservationRepositoryImpl implements ReservationRepository {
         List<String> reservedSeat =
                 reservationJpaRepository.findSeatByScheduleIdAndReserveOk(scheduleId, LocalDateTime.now().minusMinutes(30));
         return seatJpaRepository.findBySeatIdNotIn(reservedSeat).stream()
-                .map(seatEntity -> concertMapper.toDomain(seatEntity, concertScheduleEntity)).toList();
+                .map(seatEntity -> reservationMapper.toDomain(seatEntity, concertScheduleEntity)).toList();
     }
 
     @Override
     public List<Reservation> getReservations(String userId) {
         return reservationJpaRepository.findByUserId(userId).stream()
-                .map(concertMapper::toDomain).toList();
+                .map(reservationMapper::toDomain).toList();
     }
 
     @Override
@@ -63,17 +63,17 @@ public class ReservationRepositoryImpl implements ReservationRepository {
                 concertScheduleJpaRepository.findByScheduleId(scheduleId);
         ConcertEntity concertEntity =
                 concertJpaRepository.findByConcertId(concertScheduleEntity.getConcertId());
-        return concertMapper.toDomain(concertEntity, concertScheduleEntity);
+        return reservationMapper.toDomain(concertEntity, concertScheduleEntity);
     }
 
     @Override
     public Seat getSelectSeats(String scheduleId, String seatId) {
-        return concertMapper.toDomain(seatJpaRepository.findBySeatId(seatId)
+        return reservationMapper.toDomain(seatJpaRepository.findBySeatId(seatId)
                 , concertScheduleJpaRepository.findByScheduleId(scheduleId)) ;
     }
 
     @Override
     public void saveReservation(Reservation reservation) {
-        reservationJpaRepository.save(concertMapper.toEntity(reservation));
+        reservationJpaRepository.save(reservationMapper.toEntity(reservation));
     }
 }

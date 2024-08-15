@@ -4,11 +4,10 @@ import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
 @Getter
-public class PaymentEvent extends ApplicationEvent {
+public class PaymentEvent{
     private final Payment payment;
 
-    public PaymentEvent(Object source, Payment payment) {
-        super(source);
+    public PaymentEvent(Payment payment) {
         this.payment = payment;
     }
 

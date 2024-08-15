@@ -1,6 +1,6 @@
 package io.hhp.concertreserve.payment.domain;
 
-import io.hhp.concertreserve.support.exception.ConcertException;
+import io.hhp.concertreserve.reservation.support.ReservationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -41,7 +41,7 @@ public class PaymentService {
             Balance balance = new Balance();
             return balance.charge(balance.getBalance(userId, paymentRepository), chargeFee, paymentRepository);
         }
-        catch(ConcertException e) {
+        catch(ReservationException e) {
             log.error("충전에 실패하였습니다. : userId={}, chargeFee={}", userId, chargeFee);
             throw e;
         }
@@ -64,7 +64,7 @@ public class PaymentService {
                     , eventPublisher
             );
         }
-        catch(ConcertException e) {
+        catch(ReservationException e) {
             log.error("결제에 실패하였습니다. : reservatoinId={}, totalFee={}, userId={}", reservatoinId, totalFee, userId);
             throw e;
         }
