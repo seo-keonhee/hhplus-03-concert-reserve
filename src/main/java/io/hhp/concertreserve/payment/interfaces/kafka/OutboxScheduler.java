@@ -5,9 +5,11 @@ import io.hhp.concertreserve.payment.domain.message.PaymentMessageOutbox;
 import io.hhp.concertreserve.payment.domain.message.PaymentMessageSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class OutboxScheduler {
 
