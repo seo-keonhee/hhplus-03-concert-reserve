@@ -1,23 +1,20 @@
 package io.hhp.concertreserve.reservation.domain;
 
-
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-
-    @Autowired
-    private RedissonClient redissonClient;
+    private final RedissonClient redissonClient;
 
     /**
      * 모든 콘서트 조회
@@ -47,8 +44,8 @@ public class ReservationService {
      */
     public Reservation applyReservation(String scheduleId, String seatId, String userId) {
         RLock lock = redissonClient.getLock(seatId);
+        lock.lock();
         try{
-            lock.lock();
             Reservation reservation = new Reservation();
             return reservation.reserve(scheduleId, seatId, userId, reservationRepository);
         }

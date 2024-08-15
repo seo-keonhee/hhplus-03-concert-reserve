@@ -1,4 +1,4 @@
-package io.hhp.concertreserve.queue.support.config;
+package io.hhp.concertreserve.reservation.support.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
