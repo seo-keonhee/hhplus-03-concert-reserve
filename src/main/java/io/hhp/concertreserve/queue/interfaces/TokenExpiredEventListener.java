@@ -1,6 +1,6 @@
 package io.hhp.concertreserve.queue.interfaces;
 
-import io.hhp.concertreserve.payment.domain.PaymentSuccessEvent;
+import io.hhp.concertreserve.payment.domain.event.PaymentEvent;
 import io.hhp.concertreserve.queue.domain.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
@@ -16,7 +16,7 @@ public class TokenExpiredEventListener {
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void handleTokenExpiredEvent(PaymentSuccessEvent event) {
+    public void expireToken(PaymentEvent event) {
         tokenService.expireToken(event.getUserId());
     }
 }

@@ -1,5 +1,7 @@
 package io.hhp.concertreserve.payment.domain;
 
+import io.hhp.concertreserve.payment.domain.event.PaymentEventPublisher;
+import io.hhp.concertreserve.payment.domain.event.PaymentEvent;
 import io.hhp.concertreserve.reservation.support.ReservationException;
 import io.hhp.concertreserve.reservation.support.ErrorCode;
 import jakarta.transaction.Transactional;
@@ -57,7 +59,7 @@ public class Payment {
 
         // 이벤트 발생
         Payment payment = new Payment(reservationId, userId, balance, totalFee, LocalDateTime.now());
-        paymentEventPublisher.successEvent(new PaymentSuccessEvent(payment));
+        paymentEventPublisher.successEvent(new PaymentEvent(payment));
         return payment;
     }
 }

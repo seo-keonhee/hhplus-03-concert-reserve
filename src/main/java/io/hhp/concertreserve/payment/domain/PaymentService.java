@@ -1,5 +1,6 @@
 package io.hhp.concertreserve.payment.domain;
 
+import io.hhp.concertreserve.payment.domain.event.PaymentEventPublisher;
 import io.hhp.concertreserve.reservation.support.ReservationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

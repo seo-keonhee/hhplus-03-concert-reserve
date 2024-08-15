@@ -1,12 +1,13 @@
-package io.hhp.concertreserve.payment.domain;
+package io.hhp.concertreserve.payment.domain.event;
 
+import io.hhp.concertreserve.payment.domain.Payment;
 import lombok.Getter;
 
 @Getter
-public class PaymentSuccessEvent {
+public class PaymentEvent {
     private final Payment payment;
 
-    public PaymentSuccessEvent(Payment payment) {
+    public PaymentEvent(Payment payment) {
         this.payment = payment;
     }
 
