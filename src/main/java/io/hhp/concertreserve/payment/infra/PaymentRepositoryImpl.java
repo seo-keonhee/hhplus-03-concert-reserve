@@ -57,7 +57,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
      * 결제정보 존재여부를 조회한다.
      */
     @Override
-    public boolean isPayment(String reservationId) {
+    public boolean isPayment(Long reservationId) {
         return paymentJpaRepository.existsByReservationId(reservationId);
     }
 

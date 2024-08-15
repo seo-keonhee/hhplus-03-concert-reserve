@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 @Table(name = "payment", schema = "hhplus_chepter2")
 public class PaymentEntity {
     @Id
-    @Column(name = "reservation_id", nullable = false, length = 50)
-    private String reservationId;
+    @Column(name = "reservation_id", nullable = false)
+    private Long reservationId;
 
     @Column(name = "user_id", nullable = false, length = 50)
     private String userId;

@@ -52,10 +52,10 @@ public class PaymentService {
     /**
      * 결제 진행 및 결제 이력 추가
      */
-    public Payment pay(String reservatoinId, LocalDateTime reservationDate, String userId, Long totalFee) {
+    public Payment pay(Long reservationId, LocalDateTime reservationDate, String userId, Long totalFee) {
         lock.lock();
         try {
-            return new Payment().pay(reservatoinId
+            return new Payment().pay(reservationId
                     , reservationDate.plusHours(expiredTime)
                     , userId
                     , totalFee
@@ -64,7 +64,7 @@ public class PaymentService {
             );
         }
         catch(ReservationException e) {
-            log.error("결제에 실패하였습니다. : reservatoinId={}, totalFee={}, userId={}", reservatoinId, totalFee, userId);
+            log.error("결제에 실패하였습니다. : reservatoinId={}, totalFee={}, userId={}", reservationId.toString(), totalFee, userId);
             throw e;
         }
         finally {

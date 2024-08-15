@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 public class Payment {
 
-    private String reservationId;
+    private Long reservationId;
     private String userId;
     private Long balance;
     private Long totalFee;
@@ -23,7 +23,7 @@ public class Payment {
     public Payment(){}
 
     public Payment(
-            String reservationId
+            Long reservationId
             , String userId
             , Long balance
             , Long totalFee
@@ -38,7 +38,7 @@ public class Payment {
 
     @Transactional
     public Payment pay(
-            String reservationId
+            Long reservationId
             , LocalDateTime reservationExpiredDate
             , String userId
             , Long totalFee

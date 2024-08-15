@@ -66,4 +66,11 @@ public class ReservationService {
     public List<Reservation> getReservations(String userId) {
         return reservationRepository.getReservations(userId);
     }
+
+    /**
+     * 예약 확정
+     */
+    public void confirmReservation(Long id) {
+        reservationRepository.confirmReservation(id);
+    }
 }

@@ -17,4 +17,6 @@ public interface ReservationRepository {
     Seat getSelectSeats(String scheduleId, String seatId);
 
     void saveReservation(Reservation reservation);
+
+    void confirmReservation(Long id);
 }

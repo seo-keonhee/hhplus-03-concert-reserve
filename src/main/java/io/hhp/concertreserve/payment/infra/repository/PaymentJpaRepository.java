@@ -14,7 +14,7 @@ public interface PaymentJpaRepository extends JpaRepository<PaymentEntity, Strin
      * 결제가 되었음에도 동시성 이슈로 재 결제를 방지하기위해 비관적 락 이용
      */
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    boolean existsByReservationId(String reservationId);
+    boolean existsByReservationId(Long reservationId);
 
     List<PaymentEntity> findByUserId(String UserId);
 }

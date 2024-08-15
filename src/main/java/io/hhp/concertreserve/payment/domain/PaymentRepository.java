@@ -16,7 +16,7 @@ public interface PaymentRepository {
 
     List<Payment> getPayments(String userId);
 
-    boolean isPayment(String reservationId);
+    boolean isPayment(Long reservationId);
 
     void savePayment(Payment payment);
 }

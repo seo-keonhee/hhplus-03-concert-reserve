@@ -44,7 +44,7 @@ public class PaymentController {
      */
     @PostMapping("/payment")
     public ResponseEntity<PaymentDto> processPay(
-            @RequestParam(name = "reservationId") String reservationId
+            @RequestParam(name = "reservationId") Long reservationId
             , @RequestParam(name = "reservationDate") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime reservationDate
             , @RequestParam(name = "userId") String userId
             , @RequestParam(name = "totalFee") Long totalFee

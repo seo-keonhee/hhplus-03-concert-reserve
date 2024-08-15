@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PaymentEventPublisherImpl implements PaymentEventPublisher {
     private final ApplicationEventPublisher applicationEventPublisher;
+
     @Override
     public void successEvent(PaymentSuccessEvent paymentSuccessEvent) {
         applicationEventPublisher.publishEvent(paymentSuccessEvent);

@@ -14,7 +14,7 @@ public class PaymentSuccessEvent {
         return payment.getUserId();
     }
 
-    public String getReservationId() {
+    public Long getReservationId() {
         return payment.getReservationId();
     }
 }

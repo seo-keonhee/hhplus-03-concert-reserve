@@ -4,7 +4,7 @@ import io.hhp.concertreserve.payment.domain.Payment;
 
 public record PaymentDto(
         String userId
-        , String reservationId
+        , Long reservationId
         , Long totalFee
         , Long balance
 ) {

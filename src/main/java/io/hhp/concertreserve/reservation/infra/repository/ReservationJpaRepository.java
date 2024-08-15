@@ -18,4 +18,11 @@ public interface ReservationJpaRepository extends JpaRepository<ReservationEntit
     List<String> findSeatByScheduleIdAndReserveOk(String scheduleId, LocalDateTime thirtyMinAgo);
 
     List<ReservationEntity> findByUserId(String userId);
+
+    @Query(value =  """
+        update ReservationEntity s
+        set s.confirmReservation = 'Y'
+        where s.id = :id
+    """)
+    void updateById(Long id);
 }

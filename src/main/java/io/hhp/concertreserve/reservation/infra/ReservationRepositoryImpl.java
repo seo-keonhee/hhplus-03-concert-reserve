@@ -76,4 +76,9 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     public void saveReservation(Reservation reservation) {
         reservationJpaRepository.save(reservationMapper.toEntity(reservation));
     }
+
+    @Override
+    public void confirmReservation(Long id) {
+        reservationJpaRepository.updateById(id);
+    }
 }
