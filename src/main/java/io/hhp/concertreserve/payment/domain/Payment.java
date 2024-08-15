@@ -6,7 +6,6 @@ import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 
 import java.time.LocalDateTime;
 
@@ -44,7 +43,7 @@ public class Payment {
             , String userId
             , Long totalFee
             , PaymentRepository paymentRepository
-            , ApplicationEventPublisher eventPublisher
+            , PaymentEventPublisher paymentEventPublisher
     ) {
         // 좌석이 예약 가능한지 확인
         if (reservationExpiredDate.isBefore(LocalDateTime.now()))  throw new ReservationException(ErrorCode.RESERVATION_EXPIRED, ErrorCode.RESERVATION_EXPIRED.getMsg());
@@ -58,7 +57,7 @@ public class Payment {
 
         // 이벤트 발생
         Payment payment = new Payment(reservationId, userId, balance, totalFee, LocalDateTime.now());
-        eventPublisher.publishEvent(new PaymentEvent(payment));
+        paymentEventPublisher.successEvent(new PaymentSuccessEvent(payment));
         return payment;
     }
 }

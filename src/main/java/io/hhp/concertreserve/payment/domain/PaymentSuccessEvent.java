@@ -1,13 +1,12 @@
 package io.hhp.concertreserve.payment.domain;
 
 import lombok.Getter;
-import org.springframework.context.ApplicationEvent;
 
 @Getter
-public class PaymentEvent{
+public class PaymentSuccessEvent {
     private final Payment payment;
 
-    public PaymentEvent(Payment payment) {
+    public PaymentSuccessEvent(Payment payment) {
         this.payment = payment;
     }
 

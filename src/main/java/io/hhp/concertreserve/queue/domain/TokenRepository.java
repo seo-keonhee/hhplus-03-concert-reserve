@@ -10,5 +10,5 @@ public interface TokenRepository {
 
     void saveAllTokens(List<Tokens> tokens);
 
-    void deletebyUserId(String userId);
+    void deleteByUserId(String userId);
 }

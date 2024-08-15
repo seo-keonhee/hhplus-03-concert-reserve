@@ -3,7 +3,6 @@ package io.hhp.concertreserve.payment.domain;
 import io.hhp.concertreserve.reservation.support.ReservationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @RequiredArgsConstructor
 public class PaymentService {
 
-    private final ApplicationEventPublisher eventPublisher;
+    private final PaymentEventPublisher paymentEventPublisher;
     private final PaymentRepository paymentRepository;
     private final ReentrantLock lock = new ReentrantLock();
 
@@ -61,7 +60,7 @@ public class PaymentService {
                     , userId
                     , totalFee
                     , paymentRepository
-                    , eventPublisher
+                    , paymentEventPublisher
             );
         }
         catch(ReservationException e) {

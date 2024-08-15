@@ -19,6 +19,6 @@ public class WaitingInterceptor implements HandlerInterceptor {
         // 요청 헤더에서 userId를 가져옵니다.
         String userId = request.getHeader("userId");
         // 토큰이 유효하면 true를 반환하여 요청 처리를 계속합니다.
-        return tokenService.vaildToken(userId);
+        return tokenService.validToken(userId);
     }
 }

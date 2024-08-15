@@ -44,7 +44,7 @@ public class TokenRepositoryImpl implements TokenRepository {
      * 토큰을 삭제
      */
     @Override
-    public void deletebyUserId(String userId) {
+    public void deleteByUserId(String userId) {
         tokenJpaRepository.deleteByUserId(userId);
     }
 }

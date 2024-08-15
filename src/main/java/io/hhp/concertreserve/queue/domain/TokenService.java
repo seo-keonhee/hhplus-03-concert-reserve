@@ -26,20 +26,14 @@ public class TokenService {
     /**
      * 토큰 유효성 조회(활성화 되어있는 토큰인가?)
      */
-    public boolean vaildToken(String userId) {
+    public boolean validToken(String userId) {
 
-        boolean check = tokenRepository.isTokens(userId);
         // 토큰이 없는경우
-        if(!check) {
+        if(!tokenRepository.isTokens(userId)) {
             throw new ReservationException(ErrorCode.TOKEN_IS_NOT_FOUND, ErrorCode.TOKEN_IS_NOT_FOUND.getMsg());
         }
-        Tokens tokens = tokenRepository.getTokens(userId);
-//        // 대기가 끝나지 않았을 경우
-//        if (tokens.getActiveDate() == null){
-//            throw new ReservationException(ErrorCode.INVALID_TOKEN, ErrorCode.INVALID_TOKEN.getMsg());
-//        }
         // 토큰이 만료된 경우
-        if(tokens.getDeactivateDate().isBefore(LocalDateTime.now())){
+        if(tokenRepository.getTokens(userId).getDeactivateDate().isBefore(LocalDateTime.now())){
             throw new ReservationException(ErrorCode.TOKEN_EXPIRED, ErrorCode.TOKEN_EXPIRED.getMsg());
         }
         return true;
@@ -51,10 +45,7 @@ public class TokenService {
     public Tokens getToken(String userId) {
         // 토큰이 없는경우
         if(!tokenRepository.isTokens(userId)) {
-//            // 토큰을 생성한다.
-//            tokenRepository.saveTokens(Tokens.create(userId));
-//            log.info("신규토큰 발급: userId={}, startWaitDate={}", userId, LocalDateTime.now());
-            if(Boolean.FALSE.equals(redisTemplate.opsForSet().isMember(queueSetKey, userId))){
+           if(Boolean.FALSE.equals(redisTemplate.opsForSet().isMember(queueSetKey, userId))){
                 redisTemplate.opsForSet().add(queueSetKey, userId);
                 redisTemplate.opsForList().rightPush(queueKey, userId);
             }
@@ -71,13 +62,6 @@ public class TokenService {
         // 토큰 조회
         return tokenRepository.getTokens(userId);
     }
-
-//    /**
-//     * 대기중인 토큰을 순차적으로 활성화한다.
-//     */
-//    public void checkTokens(){
-//        tokenRepository.saveAllTokens(Tokens.active(tokenRepository.getWaitingTokens(passCounts)));
-//    }
 
     /**
      * 토큰을 생성한다.
@@ -102,5 +86,9 @@ public class TokenService {
             }
         }
         return users;
+    }
+
+    public void expireToken(String userId) {
+        tokenRepository.deleteByUserId(userId);
     }
 }
