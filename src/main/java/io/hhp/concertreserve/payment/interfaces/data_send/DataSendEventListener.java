@@ -1,7 +1,9 @@
 package io.hhp.concertreserve.payment.interfaces.data_send;
 
-import io.hhp.concertreserve.payment.application.DataSendFacade;
-import io.hhp.concertreserve.payment.domain.PaymentSuccessEvent;
+import io.hhp.concertreserve.payment.domain.event.PaymentEvent;
+import io.hhp.concertreserve.payment.domain.message.PaymentMessage;
+import io.hhp.concertreserve.payment.domain.message.PaymentMessageOutbox;
+import io.hhp.concertreserve.payment.domain.message.PaymentMessageSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -14,18 +16,17 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @RequiredArgsConstructor
 public class DataSendEventListener {
 
-    private final DataSendFacade dataSendFacade;
+    private final PaymentMessageSender paymentMessageSender;
+    private final PaymentMessageOutbox paymentMessageOutbox;
+
+    @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
+    void createOutboxMessage(PaymentEvent event) {
+        paymentMessageOutbox.write(new PaymentMessage().toMessage(event.getPayment()));
+    }
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void handlePaymentSendEvent(PaymentSuccessEvent event) {
-        //todo 로그찍기
-        //todo 딜래이 걸어서 비동기로 동작하는지 확인
-        try {
-            dataSendFacade.sendPayment(event.getPayment());
-        } catch (InterruptedException e) {
-            log.error("Can't not send the paymen", e);
-        }
-
+    public void paymentSend(PaymentEvent event) {
+        paymentMessageSender.send(new PaymentMessage().toMessage(event.getPayment()));
     }
 }

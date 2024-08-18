@@ -1,6 +1,6 @@
 package io.hhp.concertreserve.reservation.interfaces;
 
-import io.hhp.concertreserve.payment.domain.PaymentSuccessEvent;
+import io.hhp.concertreserve.payment.domain.event.PaymentEvent;
 import io.hhp.concertreserve.reservation.domain.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
@@ -14,7 +14,7 @@ public class ConfirmReservationEventListener {
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void handleConfirmReservationEvent(PaymentSuccessEvent event) {
+    public void confirmReservation(PaymentEvent event) {
         reservationService.confirmReservation(event.getReservationId());
     }
 }
