@@ -1,4 +1,4 @@
-package io.hhp.concertreserve.payment.interfaces.data_send;
+package io.hhp.concertreserve.payment.interfaces;
 
 import io.hhp.concertreserve.payment.domain.event.PaymentEvent;
 import io.hhp.concertreserve.payment.domain.message.PaymentMessage;
@@ -14,19 +14,19 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DataSendEventListener {
+public class PaymentEventListener {
 
     private final PaymentMessageSender paymentMessageSender;
     private final PaymentMessageOutbox paymentMessageOutbox;
 
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     void createOutboxMessage(PaymentEvent event) {
-        paymentMessageOutbox.write(new PaymentMessage().toMessage(event.getPayment()));
+        paymentMessageOutbox.write(PaymentMessage.from(event.getPayment()));
     }
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void paymentSend(PaymentEvent event) {
-        paymentMessageSender.send(new PaymentMessage().toMessage(event.getPayment()));
+        paymentMessageSender.send(PaymentMessage.from(event.getPayment()));
     }
 }

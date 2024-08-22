@@ -21,7 +21,7 @@ public class PaymentMessageConsumer {
     public void paymentSend(String message) {
         receiveMessage = message;
         try {
-            dataSendFacade.sendPayment(new PaymentMessage().toPayment(message));
+            dataSendFacade.sendPayment(new PaymentMessage().toPayment());
         } catch (InterruptedException e) {
             log.error("Can't not send the payment", e);
         }

@@ -44,7 +44,7 @@ public class KafkaTest {
     public void testSendAndReceive() throws Exception {
         // given
         Payment payment = new Payment(1L,"u001",20000L, 15000L, LocalDateTime.now());
-        PaymentMessage message = new PaymentMessage().toMessage(payment);
+        PaymentMessage message = PaymentMessage.from(payment);
 
         // whne
         paymentKafkaMessageSender.send(message);
@@ -62,7 +62,7 @@ public class KafkaTest {
     public void testOutboxConsumer() throws Exception {
         //given
         Payment payment = new Payment(2L,"u002",20000L, 15000L, LocalDateTime.now());
-        PaymentMessage message = new PaymentMessage().toMessage(payment);
+        PaymentMessage message = PaymentMessage.from(payment);
 
         //when
         paymentKafkaMessageSender.send(message);
@@ -79,14 +79,14 @@ public class KafkaTest {
      * 스케줄러 로직 테스트
      */
     @Test
-    public void testOutboxScheduler() throws Exception {
+    public void testOutboxScheduler() {
         // given
         Payment payment1 = new Payment(3L,"u003",20000L, 15000L, LocalDateTime.now());
-        paymentMessageOutbox.write(new PaymentMessage().toMessage(payment1));
+        paymentMessageOutbox.write(PaymentMessage.from(payment1));
         Payment payment2 = new Payment(4L,"u004",20000L, 15000L, LocalDateTime.now());
-        paymentMessageOutbox.write(new PaymentMessage().toMessage(payment2));
+        paymentMessageOutbox.write(PaymentMessage.from(payment2));
         Payment payment3 = new Payment(5L,"u005",20000L, 15000L, LocalDateTime.now());
-        paymentMessageOutbox.write(new PaymentMessage().toMessage(payment3));
+        paymentMessageOutbox.write(PaymentMessage.from(payment3));
 
         //when
         outboxScheduler.resend();

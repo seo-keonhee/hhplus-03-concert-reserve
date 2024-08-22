@@ -20,7 +20,7 @@ public class PaymentMessage {
 
     public PaymentMessage() {}
 
-    public PaymentMessage toMessage(Payment payment) {
+    public static PaymentMessage from(Payment payment) {
         PaymentMessage paymentMessage = new PaymentMessage();
         paymentMessage.setMessageId(payment.getReservationId());
         ObjectMapper mapper = new ObjectMapper();
@@ -34,7 +34,7 @@ public class PaymentMessage {
         return paymentMessage;
     }
 
-    public Payment toPayment(String message) {
+    public Payment toPayment() {
         Payment payment = new Payment();
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
@@ -46,3 +46,4 @@ public class PaymentMessage {
         return payment;
     }
 }
+

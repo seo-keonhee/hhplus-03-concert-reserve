@@ -16,7 +16,7 @@ public class PaymentMessageOutboxConsumer {
     private int updateCount;
 
     @KafkaListener(topics = "payment-success", groupId = "payment")
-    public void checkPublished(String message){
-        updateCount = paymentMessageOutbox.updateState(new PaymentMessage().toPayment(message).getReservationId());
+    public void checkPublished(){
+        updateCount = paymentMessageOutbox.updateState(new PaymentMessage().toPayment().getReservationId());
     }
 }
