@@ -32,6 +32,5 @@ public enum ErrorCode {
     // Queue 관련 ErrorCode
     QUEUE_POSITION("%s 님의 현재대기인원수: %d 명, 대기시간: %s 분");
 
-
     private final String msg;
 }
